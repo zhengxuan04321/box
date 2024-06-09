@@ -7,7 +7,7 @@
     // 选择`🎯 全球直连`为测试本地网络（运营商网络速度和 IPv6 支持情况），可选择其它节点用于测试机场节点速度和 IPv6 支持情况
     { "tag": "🪜 代理域名", "type": "selector", "outbounds": [ "🚀 节点选择", "🎯 全球直连" ] },
     { "tag": "📹 油管视频", "type": "selector", "outbounds": [ "🚀 节点选择", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点" ] },
-  	{ "tag": "🇬 谷歌服务", "type": "selector", "outbounds": [ "🇺🇸 美国节点", "🚀 节点选择" ] },
+    { "tag": "🇬 谷歌服务", "type": "selector", "outbounds": [ "🇺🇸 美国节点", "🚀 节点选择" ] },
     { "tag": "ChatGPT", "type": "selector", "outbounds": [ "🚀 节点选择", "ChatGPT节点" ] },
     { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点"  ] },
     { "tag": "🎯 全球直连", "type": "selector", "outbounds": [ "DIRECT" ] },
