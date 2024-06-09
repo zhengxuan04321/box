@@ -1,107 +1,125 @@
+//DustinWin-ruleset全分组规则
 {
-  // 出站
   "outbounds": [
-    // 手动选择国家或地区节点；根据“国家或地区出站”的名称对 `outbounds` 值进行增删改，须一一对应
-    { "tag": "🚀 节点选择", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", "🎯 全球直连" ] },
-    { "tag": "🐟 漏网之鱼", "type": "selector", "outbounds": [ "🎯 全球直连", "🚀 节点选择" ] },
-    // 选择`🎯 全球直连`为测试本地网络（运营商网络速度和 IPv6 支持情况），可选择其它节点用于测试机场节点速度和 IPv6 支持情况
-    { "tag": "YouTube", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
-	{ "tag": "📢 谷歌FCM", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
-	{ "tag": "Google谷歌", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
-    { "tag": "ChatGPT", "type": "selector", "outbounds": [ "🚀 节点选择", "ChatGPT节点" ] },
-    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择" ] },
-    { "tag": "🎯 全球直连", "type": "selector", "outbounds": [ "DIRECT" ] },
-    // 若需强制开启直连域名 IPv6 优先，可添加 `"domain_strategy": "prefer_ipv6"` 配置项（不推荐）
-    { "tag": "DIRECT", "type": "direct" },
-    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "DIRECT", "REJECT", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
-    { "tag": "dns-out", "type": "dns" },
-
-    // -------------------- 国家或地区出站 --------------------
-    // 自动选择节点，即按照 url 测试结果使用延迟最低的节点；测试后容差大于 50ms 才会切换到延迟低的那个节点；筛选出“香港”节点，支持正则表达式
-    { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)港|hk|hongkong|hong kong" ] },
-    // 可使用 `"use_all_providers": true` 代替 `"providers": [ "🛫 我的机场 1", "🛫 我的机场 2", ... ]`，意思为引入所有代理集合
-    { "tag": "🇹🇼 台湾节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)台|tw|taiwan" ] },
-    { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)日本|jp|japan" ] },
-    { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)新|sg|singapore" ] },
-    { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)美|us|unitedstates|united states" ] },
-	{ "tag": "ChatGPT节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)chat|gpt|chatgpt" ] },
+    { "tag": "🚀 节点选择", "type": "selector", "outbounds": [ {providers_tags}, "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", "📺 省流节点", "👍 高级节点", "🚀 手动切换", "🎯 本机直连" ] },
+    { "tag": "🐟 漏网之鱼", "type": "selector", "outbounds": [ {providers_tags}, "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", "📺 省流节点", "👍 高级节点", "🚀 手动切换", "🎯 本机直连" ] },
+    { "tag": "🎯 全球直连", "type": "selector", "outbounds": [ "🎯 本机直连", "🚀 节点选择" ] },
+    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "🤖 人工智能", "type": "selector", "outbounds": [ "🇯🇵 日本节点", "🇺🇸 美国节点", "🇸🇬 新加坡节点", "🇰🇷 韩国节点", "🚀 节点选择" ] },
+    { "tag": "🎮 游戏平台", "type": "selector", "outbounds": [ "🎯 本机直连", "🚀 节点选择" ] },
+    { "tag": "Ⓜ️ 微软服务", "type": "selector", "outbounds": [ "🎯 本机直连", "🚀 节点选择" ] },
+    { "tag": "📢 谷歌服务", "type": "selector", "outbounds": [ "🎯 本机直连", "🚀 节点选择" ] },
+    { "tag": "🍎 苹果服务", "type": "selector", "outbounds": [ "🎯 本机直连", "🚀 节点选择" ] },
+    { "tag": "📈 网络测试", "type": "selector", "outbounds": [ "🎯 本机直连", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", {providers_tags}, "🚀 手动切换" ] },
+    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "🎯 本机直连", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", {providers_tags}, "🚀 手动切换" ] },
+    { "tag": "🚀 手动切换", "type": "selector", "use_all_providers": true },
+    { "tag": "📺 省流节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "0.[1-5]|低倍率|省流|大流量" ] },
+    { "tag": "👍 高级节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "专线|专用|高级|直连|急速|高倍率|游戏|game|Game|GAME|IEPL|IPLC|AIA|CTM|CC|iepl|iplc|aia|ctm|cc|AC" ] },
+    { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "港|HK|Hong Kong" ] },
+    { "tag": "🇹🇼 台湾节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "台|新北|彰化|TW|Taiwan" ] },
+    { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "日本|川日|东京|大阪|泉日|埼玉|沪日|深日|[^-]日|JP|Japan" ] },
+    { "tag": "🇰🇷 韩国节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "KR|Korea|KOR|首尔|韩|韓" ] },
+    { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "新加坡|坡|狮城|SG|Singapore" ] },
+    { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 100, "use_all_providers": true, "includes": [ "美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States" ] },
+    { "tag": "🎯 本机直连", "type": "direct" },
+    { "tag": "dns-out", "type": "dns" }
   ],
-  // 代理集合（获取机场订阅链接内的所有节点）
-  "outbound_providers": [
-    {
-      "tag": "🛫 我的机场 1",
-      "type": "remote",
-      // 机场订阅链接，使用 Clash 链接
-      "download_url": "https://mojie.app/api/v1/client/subscribe?token=81aff0c5b46ec2bf8ef5f479cdd87d82",
-      "path": "./providers/airport1.yaml",
-      "download_interval": "24h",
-      "download_ua": "clash.meta",
-      // 初步筛选需要的节点，可有效减轻路由器压力，支持正则表达式，若不筛选可删除此配置项
-      "includes": [ "香港|台湾|日本|新加坡|美国" ],
-      // 初步排除不需要的节点，支持正则表达式，若不排除可删除此配置项
-      "excludes": "高倍|×10",
-      "healthcheck_url": "https://www.gstatic.com/generate_204",
-      "healthcheck_interval": "10m"
-    },
-    {
-      "tag": "🛫 我的机场 2",
-      "type": "remote",
-      "download_url": "https://mojie.app/api/v1/client/subscribe?token=81aff0c5b46ec2bf8ef5f479cdd87d82",
-      "path": "./providers/airport2.yaml",
-      "download_interval": "24h",
-      "download_ua": "clash.meta",
-      "includes": [ "香港|台湾|日本|新加坡|美国" ],
-      "excludes": "高倍|×10",
-      "healthcheck_url": "https://www.gstatic.com/generate_204",
-      "healthcheck_interval": "10m"
-    }
-  ],
-  // 路由
   "route": {
-    // 规则
     "rules": [
-      { "protocol": [ "dns" ], "outbound": "dns-out" },
-      { "clash_mode": "Direct", "outbound": "DIRECT" },
+      { "protocol":  "dns" , "outbound": "dns-out" },
       { "clash_mode": "Global", "outbound": "GLOBAL" },
-      // 自定义规则优先放前面
-      { "rule_set": [ "ai" ], "outbound": "ChatGPT" },
-      { "rule_set": [ "networktest" ], "outbound": "YouTube" },
-	  { "rule_set": [ "networktest" ], "outbound": "📢 谷歌FCM" },
-	  { "rule_set": [ "networktest" ], "outbound": "Google谷歌" },
-      { "rule_set": [ "telegramip" ], "outbound": "📲 电报消息", "skip_resolve": true },
+      { "clash_mode": "Direct", "outbound": "🎯 本机直连" },
+      { "rule_set": "private", "outbound": "🎯 全球直连" },
+	  { "rule_set": "ai", "outbound": "🤖 人工智能" },
+      { "rule_set": "microsoft-cn", "outbound": "Ⓜ️ 微软服务" },
+      { "rule_set": "apple-cn", "outbound": "🍎 苹果服务" },
+      { "rule_set": "google-cn", "outbound": "📢 谷歌服务" },
+      { "rule_set": "games-cn", "outbound": "🎮 游戏平台" },
+      { "rule_set": "networktest", "outbound": "📈 网络测试" },
+      { "rule_set": "proxy", "outbound": "🚀 节点选择" },
+      { "rule_set": "cn", "outbound": "🎯 全球直连" },
+      { "rule_set": "telegramip", "outbound": "📲 电报消息" },
+      { "rule_set": "cnip", "outbound": "🎯 全球直连" }
     ],
-    // 规则集（binary 文件每天自动更新）
     "rule_set": [
       {
-        "tag": "ads",
+        "tag": "private",
         "type": "remote",
         "format": "binary",
-        "path": "./ruleset/ads.srs",
-        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/ads.srs"
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/private.srs",
+        "download_detour": "🎯 本机直连"
       },
       {
         "tag": "ai",
         "type": "remote",
         "format": "binary",
-        "path": "./ruleset/ai.srs",
-        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/ai.srs"
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/ai.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "microsoft-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/microsoft-cn.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "apple-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/apple-cn.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "google-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/google-cn.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "games-cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/games-cn.srs",
+        "download_detour": "🎯 本机直连"
       },
       {
         "tag": "networktest",
         "type": "remote",
         "format": "binary",
-        "path": "./ruleset/networktest.srs",
-        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/networktest.srs"
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/networktest.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "proxy",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/proxy.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/cn.srs",
+        "download_detour": "🎯 本机直连"
       },
       {
         "tag": "telegramip",
         "type": "remote",
         "format": "binary",
-        "path": "./ruleset/telegramip.srs",
-        "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/telegramip.srs"
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/telegramip.srs",
+        "download_detour": "🎯 本机直连"
+      },
+      {
+        "tag": "cnip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://fastly.jsdelivr.net/gh/DustinWin/ruleset_geodata@sing-box/cnip.srs",
+        "download_detour": "🎯 本机直连"
       }
     ],
-    // 默认出站，即没有命中规则的域名或 IP 走该规则
     "final": "🐟 漏网之鱼"
   }
 }
