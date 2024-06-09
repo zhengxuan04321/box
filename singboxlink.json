@@ -43,7 +43,7 @@
       "tag": "🛫 我的机场 1",
       "type": "remote",
       // 机场订阅链接，使用 Clash 链接
-      "download_url": "https://aliyun.kqskunlun.xyz/api/v1/client/subscribe?token=895596f2b1ad2e874f2b1a84257f0e0a",
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Fmojie.app%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D81aff0c5b46ec2bf8ef5f479cdd87d82&insert=false",
       "path": "./providers/airport1.yaml",
       "download_interval": "24h",
       "download_ua": "clash.meta",
@@ -57,7 +57,7 @@
     {
       "tag": "🛫 我的机场 2",
       "type": "remote",
-      "download_url": "https://mojie.app/api/v1/client/subscribe?token=81aff0c5b46ec2bf8ef5f479cdd87d82",
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Faliyun.kqskunlun.xyz%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D895596f2b1ad2e874f2b1a84257f0e0a&insert=false",
       "path": "./providers/airport2.yaml",
       "download_interval": "24h",
       "download_ua": "clash.meta",
