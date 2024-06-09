@@ -24,7 +24,7 @@
     { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)日本|jp|japan" ] },
     { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)新|sg|singapore" ] },
     { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)美|us|unitedstates|united states" ] },
-	{ "tag": "ChatGPT节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)chat|gpt|chatgpt" ] },
+    { "tag": "ChatGPT节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)chat|gpt|chatgpt" ] },
   ],
   // 代理集合（获取机场订阅链接内的所有节点）
   "outbound_providers": [
@@ -56,60 +56,31 @@
       "healthcheck_interval": "10m"
     }
   ],
-  // 路由
+// 路由
   "route": {
     // 规则
     "rules": [
       { "protocol": [ "dns" ], "outbound": "dns-out" },
       { "clash_mode": "Direct", "outbound": "DIRECT" },
-      { "clash_mode": "Global", "outbound": "GLOBAL" },
+      { "clash_mode": "Global", "outbound": "🚀 节点选择" },
       // 自定义规则优先放前面
-      { "rule_set": [ "ai" ], "outbound": "ChatGPT" },
-      { "rule_set": [ "google-cn" ], "outbound": "🇬 谷歌服务" },
-      { "rule_set": [ "youtube" ], "outbound": "📹 油管视频" },
-      { "rule_set": [ "proxy" ], "outbound": "🪜 代理域名" },
-      { "rule_set": [ "telegramip" ], "outbound": "📲 电报消息", "skip_resolve": true },
+      { "geosite": [ "ai" ], "outbound": "ChatGPT" },
+      { "geosite": [ "google-cn" ], "outbound": "🇬 谷歌服务" },
+      { "geosite": [ "youtube" ], "outbound": "📹 油管视频" },
+      { "geosite": [ "proxy" ], "outbound": "🪜 代理域名" },
+      { "geoip": [ "telegram" ], "outbound": "📲 电报消息", "skip_resolve": true },
     ],
-
-      // 规则集（binary 文件每天自动更新）
-      "rule_set": [
-        {
-          "tag": "ai",
-          "type": "remote",
-          "format": "binary",
-          "path": "./ruleset/ai.srs",
-          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/ai.srs"
-        },
-        {
-          "tag": "google-cn",
-          "type": "remote",
-          "format": "binary",
-          "path": "./ruleset/google-cn.srs",
-          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/google-cn.srs"
-        },
-        {
-          "tag": "youtube",
-          "type": "remote",
-          "format": "binary",
-          "path": "./ruleset/youtube.srs",
-          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/youtube.srs"
-        },
-        {
-          "tag": "proxy",
-          "type": "remote",
-          "format": "binary",
-          "path": "./ruleset/proxy.srs",
-          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/proxy.srs"
-        },
-        {
-          "tag": "telegramip",
-          "type": "remote",
-          "format": "binary",
-          "path": "./ruleset/telegramip.srs",
-          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/telegramip.srs"
-        }
-      ],
-      // 默认出站，即没有命中规则的域名或 IP 走该规则
-      "final": "🐟 漏网之鱼"
-    }
+    // geosite 配置项
+    "geosite": {
+      "path": "./geosite.db",
+      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geosite.db"
+    },
+    // geoip 配置项
+    "geoip": {
+      "path": "./geoip.db",
+      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geoip.db"
+    },
+    // 默认出站，即没有命中规则的域名或 IP 走该规则
+    "final": "🐟 漏网之鱼"
   }
+}
