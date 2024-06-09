@@ -2,40 +2,29 @@
   // 出站
   "outbounds": [
     // 手动选择国家或地区节点；根据“国家或地区出站”的名称对 `outbounds` 值进行增删改，须一一对应
-    { "tag": "🚀 节点选择", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🆓 免费节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "🚀 节点选择", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点", "🎯 全球直连" ] },
     { "tag": "🐟 漏网之鱼", "type": "selector", "outbounds": [ "🎯 全球直连", "🚀 节点选择" ] },
-    // Speedtest 测速网站：选择`🎯 全球直连` 为测试本地网络速度（运营商网络速度），可选择其它节点用于测试机场节点速度
-    { "tag": "📈 网络测速", "type": "selector", "outbounds": [ "🎯 全球直连", "🇭🇰 香港节点", "🆓 免费节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
-    { "tag": "🧱 GFWList 域名", "type": "selector", "outbounds": [ "🚀 节点选择", "🎯 全球直连" ] },
-    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择" ] },
-    { "tag": "🛑 广告拦截", "type": "selector", "outbounds": [ "REJECT" ] },
+    // 选择`🎯 全球直连`为测试本地网络（运营商网络速度和 IPv6 支持情况），可选择其它节点用于测试机场节点速度和 IPv6 支持情况
+    { "tag": "🪜 代理域名", "type": "selector", "outbounds": [ "🚀 节点选择", "🎯 全球直连" ] },
+    { "tag": "📹 油管视频", "type": "selector", "outbounds": [ "🚀 节点选择", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点" ] },
+  	{ "tag": "🇬 谷歌服务", "type": "selector", "outbounds": [ "🇺🇸 美国节点", "🚀 节点选择" ] },
+    { "tag": "ChatGPT", "type": "selector", "outbounds": [ "🚀 节点选择", "ChatGPT节点" ] },
+    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择", "🇭🇰 香港节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点"  ] },
     { "tag": "🎯 全球直连", "type": "selector", "outbounds": [ "DIRECT" ] },
-    { "tag": "REJECT", "type": "block" },
     // 若需强制开启直连域名 IPv6 优先，可添加 `"domain_strategy": "prefer_ipv6"` 配置项（不推荐）
     { "tag": "DIRECT", "type": "direct" },
-    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "DIRECT", "REJECT", "🇭🇰 香港节点", "🆓 免费节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "DIRECT", "REJECT", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
     { "tag": "dns-out", "type": "dns" },
-
-    // 单个出站节点（以 vless 为例）
-    {
-      "tag": "🆓 免费节点",
-      "type": "vless",
-      "server": "example.com",
-      "server_port": 443,
-      "uuid": "{uuid}",
-      "network": "tcp",
-      "tls": { "enabled": true, "server_name": "example.com", "insecure": false },
-      "transport": { "type": "ws", "path": "/?ed=2048", "headers": { "Host": "example.com" } }
-    },
 
     // -------------------- 国家或地区出站 --------------------
     // 自动选择节点，即按照 url 测试结果使用延迟最低的节点；测试后容差大于 50ms 才会切换到延迟低的那个节点；筛选出“香港”节点，支持正则表达式
-    { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)港|hk|hongkong|hong kong" ] },
+    { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)港|hk|hongkong|hong kong" ] },
     // 可使用 `"use_all_providers": true` 代替 `"providers": [ "🛫 我的机场 1", "🛫 我的机场 2", ... ]`，意思为引入所有代理集合
     { "tag": "🇹🇼 台湾节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)台|tw|taiwan" ] },
-    { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)日本|jp|japan" ] },
-    { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)新|sg|singapore" ] },
-    { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)美|us|unitedstates|united states" ] }
+    { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)日本|jp|japan" ] },
+    { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)新|sg|singapore" ] },
+    { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)美|us|unitedstates|united states" ] },
+	{ "tag": "ChatGPT节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)chat|gpt|chatgpt" ] },
   ],
   // 代理集合（获取机场订阅链接内的所有节点）
   "outbound_providers": [
@@ -73,24 +62,55 @@
     "rules": [
       { "protocol": [ "dns" ], "outbound": "dns-out" },
       { "clash_mode": "Direct", "outbound": "DIRECT" },
-      { "clash_mode": "Global", "outbound": "🚀 节点选择" },
+      { "clash_mode": "Global", "outbound": "GLOBAL" },
       // 自定义规则优先放前面
-      { "geosite": [ "category-ads-all" ], "outbound": "🛑 广告拦截" },
-      { "geosite": [ "speedtest" ], "outbound": "📈 网络测速" },
-      { "geosite": [ "gfw" ], "outbound": "🧱 GFWList 域名" },
-      { "geoip": [ "telegram" ], "outbound": "📲 电报消息", "skip_resolve": true },
+      { "rule_set": [ "ai" ], "outbound": "ChatGPT" },
+      { "rule_set": [ "networktest" ], "outbound": "YouTube" },
+      { "rule_set": [ "google-cn" ], "outbound": "🇬 谷歌服务" },
+      { "rule_set": [ "youtube" ], "outbound": "📹 油管视频" },
+      { "rule_set": [ "proxy" ], "outbound": "🪜 代理域名" },
+      { "rule_set": [ "telegramip" ], "outbound": "📲 电报消息", "skip_resolve": true },
     ],
-    // geosite 配置项
-    "geosite": {
-      "path": "./geosite.db",
-      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geosite.db"
-    },
-    // geoip 配置项
-    "geoip": {
-      "path": "./geoip.db",
-      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geoip.db"
-    },
-    // 默认出站，即没有命中规则的域名或 IP 走该规则
-    "final": "🐟 漏网之鱼"
+
+      // 规则集（binary 文件每天自动更新）
+      "rule_set": [
+        {
+          "tag": "ai",
+          "type": "remote",
+          "format": "binary",
+          "path": "./ruleset/ai.srs",
+          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/ai.srs"
+        },
+        {
+          "tag": "google-cn",
+          "type": "remote",
+          "format": "binary",
+          "path": "./ruleset/google-cn.srs",
+          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/google-cn.srs"
+        },
+        {
+          "tag": "youtube",
+          "type": "remote",
+          "format": "binary",
+          "path": "./ruleset/youtube.srs",
+          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/youtube.srs"
+        },
+        {
+          "tag": "proxy",
+          "type": "remote",
+          "format": "binary",
+          "path": "./ruleset/proxy.srs",
+          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/proxy.srs"
+        },
+        {
+          "tag": "telegramip",
+          "type": "remote",
+          "format": "binary",
+          "path": "./ruleset/telegramip.srs",
+          "url": "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/telegramip.srs"
+        }
+      ],
+      // 默认出站，即没有命中规则的域名或 IP 走该规则
+      "final": "🐟 漏网之鱼"
+    }
   }
-}
