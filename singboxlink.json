@@ -65,7 +65,6 @@
       { "clash_mode": "Global", "outbound": "GLOBAL" },
       // 自定义规则优先放前面
       { "rule_set": [ "ai" ], "outbound": "ChatGPT" },
-      { "rule_set": [ "networktest" ], "outbound": "YouTube" },
       { "rule_set": [ "google-cn" ], "outbound": "🇬 谷歌服务" },
       { "rule_set": [ "youtube" ], "outbound": "📹 油管视频" },
       { "rule_set": [ "proxy" ], "outbound": "🪜 代理域名" },
