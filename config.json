@@ -1,0 +1,84 @@
+{
+  // 出站
+  "outbounds": [
+    // 手动选择国家或地区节点；根据“国家或地区出站”的名称对 `outbounds` 值进行增删改，须一一对应
+    { "tag": "🚀 节点选择", "type": "selector", "outbounds": [ "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "🐟 漏网之鱼", "type": "selector", "outbounds": [ "🎯 全球直连", "🚀 节点选择" ] },
+    // Speedtest 测速网站：选择`🎯 全球直连` 为测试本地网络速度（运营商网络速度），可选择其它节点用于测试机场节点速度
+    { "tag": "📈 网络测速", "type": "selector", "outbounds": [ "🎯 全球直连", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "🧱 GFWList 域名", "type": "selector", "outbounds": [ "🚀 节点选择", "🎯 全球直连" ] },
+    { "tag": "📲 电报消息", "type": "selector", "outbounds": [ "🚀 节点选择" ] },
+    { "tag": "🛑 广告拦截", "type": "selector", "outbounds": [ "REJECT" ] },
+    { "tag": "🎯 全球直连", "type": "selector", "outbounds": [ "DIRECT" ] },
+    { "tag": "REJECT", "type": "block" },
+    // 若需强制开启直连域名 IPv6 优先，可添加 `"domain_strategy": "prefer_ipv6"` 配置项（不推荐）
+    { "tag": "DIRECT", "type": "direct" },
+    { "tag": "GLOBAL", "type": "selector", "outbounds": [ "DIRECT", "REJECT", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
+    { "tag": "dns-out", "type": "dns" },
+
+    // -------------------- 国家或地区出站 --------------------
+    // 自动选择节点，即按照 url 测试结果使用延迟最低的节点；测试后容差大于 50ms 才会切换到延迟低的那个节点；筛选出“香港”节点，支持正则表达式
+    { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)港|hk|hongkong|hong kong" ] },
+    // 可使用 `"use_all_providers": true` 代替 `"providers": [ "🛫 我的机场 1", "🛫 我的机场 2", ... ]`，意思为引入所有代理集合
+    { "tag": "🇹🇼 台湾节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "(?i)台|tw|taiwan" ] },
+    { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)日本|jp|japan" ] },
+    { "tag": "🇸🇬 新加坡节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)新|sg|singapore" ] },
+    { "tag": "🇺🇸 美国节点", "type": "urltest", "tolerance": 50, "providers": [ "🛫 我的机场 1", "🛫 我的机场 2" ], "includes": [ "(?i)美|us|unitedstates|united states" ] }
+  ],
+  // 代理集合（获取机场订阅链接内的所有节点）
+  "outbound_providers": [
+    {
+      "tag": "🛫 我的机场 1",
+      "type": "remote",
+      // 机场订阅链接，使用 Clash 链接
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Fmojie.app%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D81aff0c5b46ec2bf8ef5f479cdd87d82&insert=false&flag=clash",
+      "path": "./providers/airport1.yaml",
+      "download_interval": "24h",
+      "download_ua": "clash.meta",
+      // 初步筛选需要的节点，可有效减轻路由器压力，支持正则表达式，若不筛选可删除此配置项
+      "includes": [ "香港|台湾|日本|新加坡|美国" ],
+      // 初步排除不需要的节点，支持正则表达式，若不排除可删除此配置项
+      "excludes": "高倍|×10",
+      "healthcheck_url": "https://www.gstatic.com/generate_204",
+      "healthcheck_interval": "10m"
+    },
+    {
+      "tag": "🛫 我的机场 2",
+      "type": "remote",
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Faliyun.kqskunlun.xyz%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D895596f2b1ad2e874f2b1a84257f0e0a&insert=false&flag=clash",
+      "path": "./providers/airport2.yaml",
+      "download_interval": "24h",
+      "download_ua": "clash.meta",
+      "includes": [ "香港|台湾|日本|新加坡|美国" ],
+      "excludes": "高倍|×10",
+      "healthcheck_url": "https://www.gstatic.com/generate_204",
+      "healthcheck_interval": "10m"
+    }
+  ],
+  // 路由
+  "route": {
+    // 规则
+    "rules": [
+      { "protocol": [ "dns" ], "outbound": "dns-out" },
+      { "clash_mode": "Direct", "outbound": "DIRECT" },
+      { "clash_mode": "Global", "outbound": "🚀 节点选择" },
+      // 自定义规则优先放前面
+      { "geosite": [ "category-ads-all" ], "outbound": "🛑 广告拦截" },
+      { "geosite": [ "speedtest" ], "outbound": "📈 网络测速" },
+      { "geosite": [ "gfw" ], "outbound": "🧱 GFWList 域名" },
+      { "geoip": [ "telegram" ], "outbound": "📲 电报消息", "skip_resolve": true },
+    ],
+    // geosite 配置项
+    "geosite": {
+      "path": "./geosite.db",
+      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geosite.db"
+    },
+    // geoip 配置项
+    "geoip": {
+      "path": "./geoip.db",
+      "download_url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/release/geoip.db"
+    },
+    // 默认出站，即没有命中规则的域名或 IP 走该规则
+    "final": "🐟 漏网之鱼"
+  }
+}
