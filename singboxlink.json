@@ -32,7 +32,7 @@
       "tag": "🛫 我的机场",
       "type": "remote",
       // 修改为你的 Clash 订阅链接
-      "download_url": "https://example.com/xxx/xxx&flag=clash",
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Fmojie.app%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D81aff0c5b46ec2bf8ef5f479cdd87d82&insert=false",
       "path": "./providers/airport.yaml",
       "download_interval": "24h",
       "download_ua": "clash.meta",
