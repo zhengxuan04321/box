@@ -20,6 +20,7 @@
     { "tag": "GLOBAL", "type": "selector", "outbounds": [ "DIRECT", "REJECT", "🇭🇰 香港节点", "🇹🇼 台湾节点", "🇯🇵 日本节点", "🇰🇷 韩国节点", "🇸🇬 新加坡节点", "🇺🇸 美国节点" ] },
     { "tag": "dns-out", "type": "dns" },
     // 若没有单个出站节点，须删除所有 `🆓 免费节点` 相关内容
+    
     { "tag": "🇭🇰 香港节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "🇭🇰" ] },
     { "tag": "🇹🇼 台湾节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "🇹🇼" ] },
     { "tag": "🇯🇵 日本节点", "type": "urltest", "tolerance": 50, "use_all_providers": true, "includes": [ "🇯🇵" ] },
@@ -32,7 +33,7 @@
       "tag": "🛫 我的机场",
       "type": "remote",
       // 修改为你的 Clash 订阅链接
-      "download_url": "https://url.v1.mk/sub?target=clash&url=https%3A%2F%2Fmojie.app%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D81aff0c5b46ec2bf8ef5f479cdd87d82&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online_Full_NoAuto.ini&emoji=true&list=false&xudp=false&udp=false&tfo=false&expand=true&scv=false&fdn=false&new_name=true",
+      "download_url": "https://api.subcloud.xyz/sub?target=clash&url=https%3A%2F%2Fmojie.app%2Fapi%2Fv1%2Fclient%2Fsubscribe%3Ftoken%3D81aff0c5b46ec2bf8ef5f479cdd87d82&insert=false",
       "path": "./providers/airport.yaml",
       "download_interval": "24h",
       "download_ua": "clash.meta",
